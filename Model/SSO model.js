@@ -7,4 +7,4 @@ const User = mongoose.model('User', new mongoose.Schema({
   logoutTime: Date
 }));
 
-module.exports = User;
+module.exports = singlesignon;
