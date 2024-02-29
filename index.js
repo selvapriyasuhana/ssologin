@@ -169,7 +169,7 @@ var mongodb = require("./Config/Mongoconfig.js");
 require('dotenv').config();
 
 
-const mongo = mongoose.connect(mongodb.url);
+const mongo = mongoose.connect(mongodb.url1);
 mongo.then(
   () => {
     console.log("Mongo_DB Connected Successfully");
