@@ -18,8 +18,8 @@
 // }));
 
 // passport.use(new GoogleStrategy({
-//   clientID: '1028773969323-2k7na5en6gv7n6v8oki11icolog372bt.apps.googleusercontent.com',
-//   clientSecret: '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',
+//   clientID: '',
+//   clientSecret: '',
 //   callbackURL: 'http://localhost:3000/auth/google/callback'
 // }, (accessToken, refreshToken, profile, done) => {
 //     process.nextTick(() => {
@@ -48,8 +48,8 @@
 // }));
 
 // passport.use(new GitHubStrategy({
-//   clientID: 'a4421c00e13c82b1f97e',
-//   clientSecret: 'cd711879d6b7e4e40542853ab38417ee82f39010',
+//   clientID: '',
+//   clientSecret: '',
 //   callbackURL: 'http://localhost:3000/auth/github/callback'
 // }, (accessToken, refreshToken, profile, done) => {
 //   process.nextTick(() => {
