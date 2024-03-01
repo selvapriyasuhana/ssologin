@@ -220,7 +220,7 @@ passport.use(new GoogleStrategy({
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/auth/github/callback'
+  callbackURL: 'https://ssologin.onrender.com/auth/github/callback'
 }, (accessToken, refreshToken, profile, done) => {
   process.nextTick(() => {
     User.findOne({ profileId: profile.id })
