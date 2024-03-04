@@ -253,7 +253,6 @@ passport.use(new LinkedInStrategy({
   callbackURL: 'https://ssologin.onrender.com/auth/linkedin/callback',
   scope: ['r_emailaddress', 'r_liteprofile']
 }, (accessToken, refreshToken, profile, done) => {
-  // LinkedIn authentication logic
   process.nextTick(() => {
     User.findOne({ profileId: profile.id })
       .then(user => {
@@ -278,7 +277,6 @@ passport.use(new LinkedInStrategy({
       });
   });
 }));
-
 
 
 passport.serializeUser((user, done) => {
