@@ -294,17 +294,19 @@ app.get('/auth/github/callback',
   (req, res) => {
     res.json({ message: 'GitHub authentication successful' });
   });
-// GET method to retrieve user details
+
+// GET method to retrieve user login details
 app.get('/user/details', (req, res) => {
   if (req.user) {
-    console.log('User authenticated:', req.user);
-    res.json(req.user);
+    res.json({
+      id: req.user.profileId,
+      email: req.user.email,
+      loginTime: req.user.loginTime
+    });
   } else {
-    console.log('User not authenticated');
     res.status(401).json({ message: 'User not authenticated' });
   }
 });
-
 
 // Logout route
 app.get('/logout', (req, res) => {
