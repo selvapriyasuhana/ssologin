@@ -165,6 +165,7 @@ const path = require('path');
 const User = require('./Model/SSO model.js');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var mongodb = require("./Config/Mongoconfig.js");
 require('dotenv').config();
 
@@ -246,6 +247,39 @@ passport.use(new GitHubStrategy({
       });
   });
 }));
+passport.use(new LinkedInStrategy({
+  clientID: process.env.LINKEDIN_CLIENT_ID,
+  clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+  callbackURL: 'https://ssologin.onrender.com/auth/linkedin/callback',
+  scope: ['r_emailaddress', 'r_liteprofile']
+}, (accessToken, refreshToken, profile, done) => {
+  // LinkedIn authentication logic
+  process.nextTick(() => {
+    User.findOne({ profileId: profile.id })
+      .then(user => {
+        if (user) {
+          // User already exists, update login time
+          user.loginTime = new Date();
+        } else {
+          // Create new user
+          user = new User({
+            profileId: profile.id,
+            email: profile.emails[0].value,
+            loginTime: new Date()
+          });
+        }
+        return user.save();
+      })
+      .then(user => {
+        return done(null, user);
+      })
+      .catch(err => {
+        return done(err);
+      });
+  });
+}));
+
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -294,6 +328,11 @@ app.get('/auth/github/callback',
   (req, res) => {
     res.json({ message: 'GitHub authentication successful' });
   });
+// LinkedIn authentication routes
+app.get('/auth/linkedin', passport.authenticate('linkedin'));
+app.get('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/' }), (req, res) => {
+  res.json({ message: 'LinkedIn authentication successful' });
+});
 
 // Route to get all user login details
 app.get('/users', (req, res) => {
