@@ -307,6 +307,25 @@ app.get('/user/details', (req, res) => {
     res.status(401).json({ message: 'User not authenticated' });
   }
 });
+// Route to get user login details
+app.get('/user/:id', (req, res) => {
+  const userId = req.params.id;
+
+  // Find the user in the database
+  User.findById(userId)
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.json(user);
+    })
+    .catch(err => {
+      console.error('Error fetching user:', err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 
 // Logout route
 app.get('/logout', (req, res) => {
